@@ -8,7 +8,7 @@ RUN apt-get update -y
 RUN apt-get -y install git unzip git-lfs g++
 RUN git lfs install 
 ARG COSYVOICE_COMMIT=main
-RUN git clone https://github.com/icradP/CosyVoice.git \
+RUN git clone https://gitclone.com/github.com/icradP/CosyVoice.git \
  && cd CosyVoice \
  && git checkout ${COSYVOICE_COMMIT} \
  && git submodule update --init --recursive
