@@ -6,8 +6,12 @@ WORKDIR /opt/CosyVoice
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 RUN apt-get update -y
 RUN apt-get -y install git unzip git-lfs g++
-RUN git lfs install
-RUN git clone --recursive https://github.com/icradP/CosyVoice.git
+RUN git lfs install 
+ARG COSYVOICE_COMMIT=main
+RUN git clone https://github.com/icradP/CosyVoice.git \
+ && cd CosyVoice \
+ && git checkout ${COSYVOICE_COMMIT} \
+ && git submodule update --init --recursive
 # here we use python==3.10 because we cannot find an image which have both python3.8 and torch2.0.1-cu118 installed
 RUN cd CosyVoice && pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com --no-cache-dir 
 # 50系显卡
