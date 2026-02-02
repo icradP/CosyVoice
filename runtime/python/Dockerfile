@@ -19,5 +19,5 @@ RUN cd CosyVoice/runtime/python/grpc && python3 -m grpc_tools.protoc -I. --pytho
 # 卸载 deepspeed 容器内不需要
 RUN pip uninstall deepspeed -y 
 
-ENTRYPOINT [ "sh","-c", "cd CosyVoice/runtime/python/grpc && \ python3 server.py \--repo_id iic/CosyVoice2-0.5B \--model_dir /models/iic/CosyVoice2-0.5B" ]
+ENTRYPOINT [ "sh","-c", "cd CosyVoice/runtime/python/grpc &&  python3 server.py --repo_id iic/CosyVoice2-0.5B --model_dir /models/iic/CosyVoice2-0.5B" ]
 
