@@ -226,7 +226,7 @@ class CosyVoice3(CosyVoice2):
                                 self.fp16)
         del configs
 
-def AutoModel(repo_id, model_dir, **kwargs):
+def AutoModel(model_dir, **kwargs):
     os.makedirs(model_dir, exist_ok=True)
 
     yaml_files = [
@@ -237,15 +237,14 @@ def AutoModel(repo_id, model_dir, **kwargs):
 
     if not any(os.path.exists(os.path.join(model_dir, y)) for y in yaml_files):
         snapshot_download(
-            repo_id,
-            local_dir=model_dir
+            local_dir="/models/{}".format(model_dir)
         )
 
-    if os.path.exists(f"{model_dir}/cosyvoice3.yaml"):
+    if os.path.exists(f"/models/{model_dir}/cosyvoice3.yaml"):
         return CosyVoice3(model_dir=model_dir, **kwargs)
-    elif os.path.exists(f"{model_dir}/cosyvoice2.yaml"):
+    elif os.path.exists(f"/models/{model_dir}/cosyvoice2.yaml"):
         return CosyVoice2(model_dir=model_dir, **kwargs)
-    elif os.path.exists(f"{model_dir}/cosyvoice.yaml"):
+    elif os.path.exists(f"/models/{model_dir}/cosyvoice.yaml"):
         return CosyVoice(model_dir=model_dir, **kwargs)
     else:
         raise TypeError("No valid model type found!")
