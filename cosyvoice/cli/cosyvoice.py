@@ -237,7 +237,7 @@ def AutoModel(repo_id, model_dir, **kwargs):
 
     if not any(os.path.exists(os.path.join(model_dir, y)) for y in yaml_files):
         snapshot_download(
-            model_id=repo_id,
+            repo_id,
             local_dir=model_dir
         )
 

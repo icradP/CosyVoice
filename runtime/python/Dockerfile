@@ -9,9 +9,7 @@ RUN apt-get -y install git unzip git-lfs g++
 RUN git lfs install 
 ARG COSYVOICE_COMMIT=main
 RUN git clone https://gitclone.com/github.com/icradP/CosyVoice.git \
- && cd CosyVoice \
- && git checkout ${COSYVOICE_COMMIT} \
- && git submodule update --init --recursive
+ && cd CosyVoice && git submodule update --init --recursive
 # here we use python==3.10 because we cannot find an image which have both python3.8 and torch2.0.1-cu118 installed
 RUN cd CosyVoice && pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com --no-cache-dir 
 # 50系显卡
@@ -23,5 +21,5 @@ RUN cd CosyVoice/runtime/python/grpc && python3 -m grpc_tools.protoc -I. --pytho
 # 卸载 deepspeed 容器内不需要
 RUN pip uninstall deepspeed -y 
 
-ENTRYPOINT [ "sh","-c", "cd CosyVoice/runtime/python/grpc &&  python3 server.py ","--repo_id iic/CosyVoice2-0.5B ","--model_dir /models/iic/CosyVoice2-0.5B" ]
+# ENTRYPOINT [ "sh","-c", "cd CosyVoice/runtime/python/grpc &&  python3 server.py ","--repo_id iic/CosyVoice2-0.5B ","--model_dir /models/iic/CosyVoice2-0.5B" ]
 
